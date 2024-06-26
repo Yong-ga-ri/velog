@@ -7,11 +7,11 @@ from git import Repo
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
 REPO_OWNER = os.getenv('REPO_OWNER')
 REPO_NAME = os.getenv('REPO_NAME')
-FEED_URL = os.getenv('FEED_URL')
+RSS_FEED_URL = os.getenv('RSS_FEED_URL')
 
 def fetch_posts():
     # Velog의 RSS 피드에서 포스트 정보 가져오기
-    feed = feedparser.parse(FEED_URL)
+    feed = feedparser.parse(RSS_FEED_URL)
     posts = []
     for entry in feed.entries:
         post_title = entry.title
