@@ -38,4 +38,4 @@ jobs:
           RSS_FEED_URL: ${{secrets.RSS_FEED_URL}}
         run: 
           cat ~/.gitconfig
-          python scripts/update_blog.py
+          # python scripts/update_blog.py
