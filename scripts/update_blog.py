@@ -5,9 +5,9 @@ from git import Repo
 
 # GitHub 액세스 토큰과 저장소 정보 설정
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
-REPO_OWNER = 'Yong-ga-ri'
-REPO_NAME = 'velog'
-FEED_URL = 'https://velog.io/rss/your_feed_url'
+REPO_OWNER = ''
+REPO_NAME = ''
+FEED_URL = ''
 
 def fetch_posts():
     # Velog의 RSS 피드에서 포스트 정보 가져오기
