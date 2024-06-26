@@ -1,9 +1,6 @@
 name: Update Velog Posts
 
-on:
-  # label:
-    #   types: [created, edited]
-    
+on:    
     schedule:
       - cron: '0 * * * *'  # 매 시간 실행
     workflow_dispatch:
@@ -41,9 +38,4 @@ jobs:
           REPO_NAME: ${{secrets.REPO_NAME}}
           FEED_URL: ${{secrets.RSS_FEED_URL}}
         run: 
-          echo secrets.GITHUB_TOKEN ${{secrets.GITHUB_TOKEN}}
-          echo secrets.REPO_OWNER ${{secrets.REPO_OWNER}}
-          echo secrets.REPO_NAME ${{secrets.REPO_NAME}}
-          echo github.repository ${{github.repository}}
-          echo secrets.RSS_FEED_URL ${{secrets.RSS_FEED_URL}}
           python scripts/update_blog.py
