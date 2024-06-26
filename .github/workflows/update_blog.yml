@@ -32,7 +32,7 @@ jobs:
 
       - name: Run update script
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
           REPO_OWNER: ${{secrets.REPO_OWNER}}
           REPO_NAME: ${{secrets.REPO_NAME}}
           RSS_FEED_URL: ${{secrets.RSS_FEED_URL}}
