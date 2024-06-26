@@ -1,6 +1,10 @@
 name: Update Velog Posts
 
 on:    
+    push:
+        branches:
+          - master
+
     schedule:
       - cron: '0 * * * *'  # 매 시간 실행
     workflow_dispatch:

@@ -29,6 +29,7 @@ def main():
 
         # Velog의 RSS 피드에서 포스트 정보 가져오기
         feed = feedparser.parse(RSS_FEED_URL)
+        print("feed: ", feed)
         print("Fetched RSS feed.")
 
         for entry in feed.entries:
