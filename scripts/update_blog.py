@@ -27,6 +27,12 @@ if not os.path.exists(posts_dir):
 def main():
     try:
         repo = Repo('.')  # 현재 디렉토리의 Git 저장소를 로드
+
+        # 리모트 저장소 정보 확인
+        for remote in repo.remotes:
+            print(f"Remote name: {remote.name}")
+            print(f"Remote URL: {remote.url}")
+
         print("Loaded the Git repository.")
 
         # Velog의 RSS 피드에서 포스트 정보 가져오기
