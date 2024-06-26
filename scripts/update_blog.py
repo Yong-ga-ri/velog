@@ -37,6 +37,7 @@ def main():
         print("Fetched RSS feed.")
 
         for entry in feed.entries:
+            entry_title_on_commit = entry.title
             post_title = entry.title.replace(
                 '/', '-').replace('\\', '-') + '.md'
             date = datetime(*entry.updated_parsed[:6])
@@ -52,7 +53,7 @@ def main():
                 # 깃허브 커밋
                 repo.git.add(file_path)
                 repo.commit(
-                    '-m', f'add title:{entry.title} updated at {date}'
+                    '-m', f'add title:{entry_title_on_commit} updated at {date}'
                 )
                 print(f"Committed changes for: {file_path}")
 
