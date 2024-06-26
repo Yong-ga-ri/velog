@@ -24,7 +24,6 @@ if not os.path.exists(posts_dir):
 
 def main():
     repo = Repo('.')  # 현재 디렉토리의 Git 저장소를 로드
-    origin = repo.remotes.origin
 
     # Velog의 RSS 피드에서 포스트 정보 가져오기
     feed = feedparser.parse(RSS_FEED_URL)
@@ -41,11 +40,9 @@ def main():
             # 깃허브 커밋
             repo.git.add(file_path)
             repo.git.commit('-m', f'add title:{entry.title} updated at {date}')
-    print("here: ", (
-        f'https://{GITHUB_TOKEN}@github.com/{REPO_OWNER}/{REPO_NAME}.git'))
-    # 푸시 설정
-    origin.set_url(
-        f'https://{GITHUB_TOKEN}@github.com/{REPO_OWNER}/{REPO_NAME}.git')
+
+    # 깃허브에 변경 사항을 푸시
+    origin = repo.remote(name='origin')
     origin.push()
 
 
