@@ -9,8 +9,6 @@ load_dotenv()
 
 # GitHub 액세스 토큰과 저장소 정보 설정
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
-print("GITHUB_TOKEN[:4]: ", GITHUB_TOKEN[:4])
-print("GITHUB_TOKEN[-4:]: ", GITHUB_TOKEN[-4:])
 REPO_OWNER = os.getenv('REPO_OWNER')
 REPO_NAME = os.getenv('REPO_NAME')
 RSS_FEED_URL = 'https://v2.velog.io/rss/@rlfgks97'
@@ -27,21 +25,9 @@ if not os.path.exists(posts_dir):
 def main():
     try:
         repo = Repo('.')  # 현재 디렉토리의 Git 저장소를 로드
-
-        # 리모트 저장소 정보 확인
-        print("repo.remotes: ", repo.remotes)
-        for remote in repo.remotes:
-            print("remote: ", str(remote)[:2])
-            print("remote: ", str(remote)[2:4])
-            print("remote: ", str(remote)[4:])
-            print("remote.url: ", str(remote.url)[-5:])
-            print("remote.url: ", str(remote.url)[-10:-5])
-            print("remote.url: ", str(remote.url)[-15:-10])
-            print("remote.url: ", str(remote.url)[-20:-15])
-            print("remote.url: ", str(remote.url)[-25:-20])
-            print("remote.url: ", str(remote.url)[-35:-25])
-            print("remote.url: ", str(remote.url)[-45:-35])
-            print("remote.url: ", str(remote.url)[-55:-45])
+        origin = repo.remote(name='origin')
+        new_url = f'https://{GITHUB_TOKEN}@github.com/{REPO_OWNER}/velog.git'
+        origin.set_url(new_url)
 
         print("Loaded the Git repository.")
 
@@ -63,14 +49,13 @@ def main():
 
                 # 깃허브 커밋
                 repo.git.add(file_path)
-                repo.index.commit(
+                repo.commit(
                     '-m', f'add title:{entry.title} updated at {date}'
                 )
                 print(f"Committed changes for: {file_path}")
 
         # 깃허브에 변경 사항을 푸시
-        origin = repo.remote(name='origin')
-        origin.push()
+        repo.git.push()
     except GitCommandError as e:
         print(f"GitCommandError: {e}")
     except Exception as e:
