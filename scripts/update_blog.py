@@ -46,7 +46,7 @@ def main():
             repo.git.commit('-m', f'add title:{entry.title} updated at {date}')
     
     # 푸시 설정
-    repo.git.push('origin', 'master')
+    repo.git.push()
 
 if __name__ == "__main__":
     main()
