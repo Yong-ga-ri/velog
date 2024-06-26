@@ -23,46 +23,38 @@ if not os.path.exists(posts_dir):
 
 
 def main():
-    try:
-        repo = Repo('.')  # 현재 디렉토리의 Git 저장소를 로드
-        origin = repo.remote(name='origin')
-        new_url = f'https://{GITHUB_TOKEN}@github.com/Yong-ga-ri/velog.git'
-        # new_url = f'https://{GITHUB_TOKEN}@github.com/{REPO_OWNER}/velog.git'
-        origin.set_url(new_url)
+    repo = Repo('.')  # 현재 디렉토리의 Git 저장소를 로드
+    origin = repo.remote(name='origin')
+    new_url = f'https://{GITHUB_TOKEN}@github.com/Yong-ga-ri/velog.git'
+    # new_url = f'https://{GITHUB_TOKEN}@github.com/{REPO_OWNER}/velog.git'
+    origin.set_url(new_url)
 
-        print("Loaded the Git repository.")
+    print("Loaded the Git repository.")
 
-        # Velog의 RSS 피드에서 포스트 정보 가져오기
-        feed = feedparser.parse(RSS_FEED_URL)
-        print("Fetched RSS feed.")
+    # Velog의 RSS 피드에서 포스트 정보 가져오기
+    feed = feedparser.parse(RSS_FEED_URL)
+    print("Fetched RSS feed.")
 
-        for entry in feed.entries:
-            entry_title_on_commit = entry.title
-            post_title = entry.title.replace(
-                '/', '-').replace('\\', '-') + '.md'
-            date = datetime(*entry.updated_parsed[:6])
-            file_path = os.path.join(posts_dir, post_title)
+    for entry in feed.entries:
+        entry_title_on_commit = entry.title
+        post_title = entry.title.replace(
+            '/', '-').replace('\\', '-') + '.md'
+        date = datetime(*entry.updated_parsed[:6])
+        file_path = os.path.join(posts_dir, post_title)
+        # 파일이 이미 존재하지 않으면 생성
+        if not os.path.exists(file_path):
+            with open(file_path, 'w', encoding='utf-8') as file:
+                file.write(entry.description)  # 글 내용을 파일에 작성
+            print(f"Created file: {file_path}")
 
-            # 파일이 이미 존재하지 않으면 생성
-            if not os.path.exists(file_path):
-                with open(file_path, 'w', encoding='utf-8') as file:
-                    file.write("test")  # 글 내용을 파일에 작성
-                    # file.write("entry.description")  # 글 내용을 파일에 작성
-                print(f"Created file: {file_path}")
+            # 깃허브 커밋
+            repo.git.add(file_path)
+            repo.index.commit(
+                '-m', f'add title:{entry_title_on_commit} updated at {date}')
+            print(f"Committed changes for: {file_path}")
 
-                # 깃허브 커밋
-                repo.git.add(file_path)
-                repo.commit(
-                    '-m', f'add title:{entry_title_on_commit} updated at {date}'
-                )
-                print(f"Committed changes for: {file_path}")
-
-        # 깃허브에 변경 사항을 푸시
-        repo.git.push()
-    except GitCommandError as e:
-        print(f"GitCommandError: {e}")
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    # 깃허브에 변경 사항을 푸시
+    repo.git.push()
 
 
 if __name__ == "__main__":
