@@ -29,7 +29,7 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git push https://${{secrets.GITHUB_TOKEN}}@github.com/REPO_OWNER/velog.git
+          git push https://${{secrets.GITHUB_TOKEN}}@github.com/${{secrets.REPO_OWNER}}/velog.git
 
       - name: Run update script
         env:
