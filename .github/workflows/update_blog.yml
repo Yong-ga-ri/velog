@@ -1,0 +1,30 @@
+name: Update Velog Posts
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # 매 시간 실행
+
+jobs:
+  update-velog-posts:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false  # 자체 토큰을 사용할 것이므로 기본 토큰 사용 안 함
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          pip install feedparser requests
+
+      - name: Run update script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/update_blog.py
