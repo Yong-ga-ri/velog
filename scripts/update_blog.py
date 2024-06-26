@@ -12,7 +12,7 @@ RSS_FEED_URL = os.getenv('RSS_FEED_URL')
 print("GITHUB_TOKEN: ", GITHUB_TOKEN[:4])
 print("REPO_OWNER: ", REPO_OWNER[:4])
 print("REPO_NAME: ", REPO_NAME[:4])
-print("RSS_FEED_URL: ", RSS_FEED_URL[:4])
+print("RSS_FEED_URL: ", type(RSS_FEED_URL))
 
 def fetch_posts():
     # Velog의 RSS 피드에서 포스트 정보 가져오기
