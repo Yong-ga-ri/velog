@@ -23,7 +23,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install feedparser requests gitpython
+          pip install feedparser requests gitpython python-dotenv
 
       - name: Configure Git
         run: |
