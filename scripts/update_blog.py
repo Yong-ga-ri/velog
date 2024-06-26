@@ -54,7 +54,7 @@ def main():
             print(f"Committed changes for: {file_path}")
 
     # 깃허브에 변경 사항을 푸시
-    origin.git.push()
+    origin.push()
 
 
 if __name__ == "__main__":
