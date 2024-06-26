@@ -50,7 +50,7 @@ def main():
             # 깃허브 커밋
             repo.git.add(file_path)
             repo.index.commit(
-                '-m', f'add title:{entry_title_on_commit} updated at {date}')
+                f'add title: {entry_title_on_commit} updated at {date}')
             print(f"Committed changes for: {file_path}")
 
     # 깃허브에 변경 사항을 푸시
