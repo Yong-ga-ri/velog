@@ -37,5 +37,5 @@ jobs:
           REPO_NAME: ${{secrets.REPO_NAME}}
           RSS_FEED_URL: ${{secrets.RSS_FEED_URL}}
         run: 
-          git config --global -l
+          cat ~/.gitconfig
           python scripts/update_blog.py
