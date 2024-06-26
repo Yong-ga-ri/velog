@@ -39,7 +39,9 @@ def main():
 
             # 깃허브 커밋
             repo.git.add(file_path)
-            repo.git.commit('-m', f'add title:{entry.title} updated at {date}')
+            repo.index.commit(
+                '-m', f'add title:{entry.title} updated at {date}'
+            )
 
     # 깃허브에 변경 사항을 푸시
     origin = repo.remote(name='origin')
