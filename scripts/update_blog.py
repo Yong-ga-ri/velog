@@ -34,9 +34,9 @@ def main():
             print("remote: ", str(remote)[:2])
             print("remote: ", str(remote)[2:4])
             print("remote: ", str(remote)[4:])
-            print("remote.url: ", str(remote.url)[:5])
-            print("remote.url: ", str(remote.url)[5:10])
-            print("remote.url: ", str(remote.url)[10:])
+            print("remote.url: ", str(remote.url)[-5:])
+            print("remote.url: ", str(remote.url)[-8:-5])
+            print("remote.url: ", str(remote.url)[-15:-10])
 
         print("Loaded the Git repository.")
 
