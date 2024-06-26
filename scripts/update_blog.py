@@ -24,14 +24,12 @@ if not os.path.exists(posts_dir):
 
 def main():
     repo = Repo('.')  # 현재 디렉토리의 Git 저장소를 로드
+    origin = repo.remote(name='origin')
 
     # Velog의 RSS 피드에서 포스트 정보 가져오기
     feed = feedparser.parse(RSS_FEED_URL)
     for entry in feed.entries:
-        post_title = entry.title
-        post_title = post_title.replace('/', '-')
-        post_title = post_title.replace('\\', '-')
-        post_title += '.md'
+        post_title = entry.title.replace('/', '-').replace('\\', '-') + '.md'
         date = datetime(*entry.updated_parsed[:6])
         file_path = os.path.join(posts_dir, post_title)
 
@@ -40,13 +38,15 @@ def main():
             with open(file_path, 'w', encoding='utf-8') as file:
                 file.write(entry.description)  # 글 내용을 파일에 작성
 
-
             # 깃허브 커밋
             repo.git.add(file_path)
             repo.git.commit('-m', f'add title:{entry.title} updated at {date}')
-    
+
     # 푸시 설정
-    repo.git.push()
+    origin.set_url(
+        f'https://{GITHUB_TOKEN}@github.com/{REPO_OWNER}/{REPO_NAME}.git')
+    origin.push()
+
 
 if __name__ == "__main__":
     main()
