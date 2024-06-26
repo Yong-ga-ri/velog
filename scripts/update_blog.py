@@ -29,9 +29,14 @@ def main():
         repo = Repo('.')  # 현재 디렉토리의 Git 저장소를 로드
 
         # 리모트 저장소 정보 확인
+        print("repo.remotes: ", repo.remotes)
         for remote in repo.remotes:
-            print(f"Remote name: {remote.name}")
-            print(f"Remote URL: {remote.url}")
+            print("remote: ", str(remote)[:2])
+            print("remote: ", str(remote)[2:4])
+            print("remote: ", str(remote)[4:])
+            print("remote.url: ", str(remote.url)[:5])
+            print("remote.url: ", str(remote.url)[5:10])
+            print("remote.url: ", str(remote.url)[10:])
 
         print("Loaded the Git repository.")
 
