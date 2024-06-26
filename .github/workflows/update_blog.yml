@@ -1,8 +1,11 @@
 name: Update Velog Posts
 
 on:
-  schedule:
-    - cron: '0 * * * *'  # 매 시간 실행
+  label:
+    types: edited
+  
+  # schedule:
+  #   - cron: '0 * * * *'  # 매 시간 실행
 
 jobs:
   update-velog-posts:
