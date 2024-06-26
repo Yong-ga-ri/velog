@@ -9,6 +9,8 @@ load_dotenv()
 
 # GitHub 액세스 토큰과 저장소 정보 설정
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
+print("GITHUB_TOKEN[:4]: ", GITHUB_TOKEN[:4])
+print("GITHUB_TOKEN[-4:]: ", GITHUB_TOKEN[-4:])
 REPO_OWNER = os.getenv('REPO_OWNER')
 REPO_NAME = os.getenv('REPO_NAME')
 RSS_FEED_URL = 'https://v2.velog.io/rss/@rlfgks97'
@@ -29,7 +31,6 @@ def main():
 
         # Velog의 RSS 피드에서 포스트 정보 가져오기
         feed = feedparser.parse(RSS_FEED_URL)
-        print("feed: ", feed)
         print("Fetched RSS feed.")
 
         for entry in feed.entries:
