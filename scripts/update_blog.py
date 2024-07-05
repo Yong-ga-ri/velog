@@ -21,7 +21,6 @@ posts_dir = os.path.join('.', 'velog-posts')
 if not os.path.exists(posts_dir):
     os.makedirs(posts_dir)
 
-
 def main():
     repo = Repo('.')  # 현재 디렉토리의 Git 저장소를 로드
     origin = repo.remote(name='origin')
@@ -29,9 +28,18 @@ def main():
     origin.set_url(new_url)
     print("Loaded the Git repository.")
 
+    # 기존 파일 모두 삭제
+    for file in os.listdir(posts_dir):
+        file_path = os.path.join(posts_dir, file)
+        # print("file_path: ", file_path)
+        if "README.md" not in file_path:
+            os.remove(file_path)
+
     # Velog의 RSS 피드에서 포스트 정보 가져오기
     feed = feedparser.parse(RSS_FEED_URL)
     print("Fetched RSS feed.")
+
+    commit_msg_body = ""
 
     for entry in feed.entries:
         entry_title_on_commit = entry.title
@@ -39,17 +47,18 @@ def main():
             '/', '-').replace('\\', '-') + '.md'
         date = datetime(*entry.updated_parsed[:6])
         file_path = os.path.join(posts_dir, post_title)
-        # 파일이 이미 존재하지 않으면 생성
-        if not os.path.exists(file_path):
-            with open(file_path, 'w', encoding='utf-8') as file:
-                file.write(entry.description)  # 글 내용을 파일에 작성
-            print(f"Created file: {file_path}")
 
-            # 깃허브 커밋
-            repo.git.add(file_path)
-            repo.index.commit(
-                f'add title: {entry_title_on_commit} updated at {date}')
-            print(f"Committed changes for: {file_path}")
+        with open(file_path, 'w', encoding='utf-8') as file:
+            file.write(entry.description)  # 글 내용을 파일에 작성
+        # print(f"Created file: {file_path}")
+        commit_msg_body += f"- title: {entry_title_on_commit} uploaded at {date}\n"
+
+    # 깃허브 커밋
+    commit_message = f"Update posts from RSS feed\n\n{commit_msg_body}"
+    # print("commit_message: ", commit_message)
+    repo.git.add(file_path)
+    repo.index.commit(commit_message)
+    # print(f"Committed changes for: {file_path}")
 
     # 깃허브에 변경 사항을 푸시
     origin.push()
