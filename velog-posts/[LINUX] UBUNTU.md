@@ -1,4 +1,4 @@
-<h1 id="우분투-계정과-권한-명령어">우분투 계정과 권한 명령어</h1>
+<h1 id="우분투-계정--권한-명령어">우분투 계정 &amp; 권한 명령어</h1>
 <h3 id="superuser">Superuser</h3>
 <ul>
 <li>시스템 운영 관리자 계정이다.</li>
@@ -289,3 +289,4 @@ UID는 사용자의 아이디를 나타내며 0 ~ 32767 사이의 숫자로 나�
 <p>  <img alt="" src="https://velog.velcdn.com/images/rlfgks97/post/a367c135-2e1e-47a6-8ef1-cfc256b252eb/image.png" /></p>
 </li>
 </ul>
+<p><a href="https://github.com/search?q=repo%3AYong-ga-ri%2Fvelog+path%3Avelog-posts+AND+path%3Alinux&amp;type=code">linux</a></p>
