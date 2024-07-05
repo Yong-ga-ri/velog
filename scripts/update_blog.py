@@ -31,10 +31,8 @@ def main():
     # 기존 파일 모두 삭제
     for file in os.listdir(posts_dir):
         file_path = os.path.join(posts_dir, file)
-        # print("file_path: ", file_path)
-        if "README.md" not in file_path:
+        if "README.md" not in file_path and os.path.isfile(file_path):
             os.remove(file_path)
-
     # Velog의 RSS 피드에서 포스트 정보 가져오기
     feed = feedparser.parse(RSS_FEED_URL)
     print("Fetched RSS feed.")
