@@ -60,6 +60,7 @@ def main():
 
     # 깃허브에 변경 사항을 푸시
     origin.push()
+    print("committed compeleted")
 
 
 if __name__ == "__main__":
