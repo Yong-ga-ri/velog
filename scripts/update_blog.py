@@ -1,4 +1,5 @@
 import os
+import json
 import feedparser
 from datetime import datetime
 from git import Repo
@@ -21,6 +22,9 @@ posts_dir = os.path.join('.', 'velog-posts')
 if not os.path.exists(posts_dir):
     os.makedirs(posts_dir)
 
+with open(os.path.join(posts_dir, 'metadata.json'), 'r', encoding='utf-8') as f:
+    metadata = json.load(f)
+
 
 def main():
     repo = Repo('.')  # 현재 디렉토리의 Git 저장소를 로드
@@ -29,11 +33,6 @@ def main():
     origin.set_url(new_url)
     print("Loaded the Git repository.")
 
-    # 기존 파일 모두 삭제
-    for file in os.listdir(posts_dir):
-        file_path = os.path.join(posts_dir, file)
-        if "README.md" not in file_path and os.path.isfile(file_path):
-            os.remove(file_path)
     # Velog의 RSS 피드에서 포스트 정보 가져오기
     feed = feedparser.parse(RSS_FEED_URL)
     print("Fetched RSS feed.")
@@ -47,6 +46,10 @@ def main():
         date = datetime(*entry.updated_parsed[:6])
         file_path = os.path.join(posts_dir, post_title)
 
+        only_title = post_title[:-3]
+        if all(basic not in only_title for basic in metadata):
+            print("post_title: ", post_title[:-3])
+
         with open(file_path, 'w', encoding='utf-8') as file:
             file.write(entry.description)  # 글 내용을 파일에 작성
         # print(f"Created file: {file_path}")
@@ -54,15 +57,15 @@ def main():
             entry_title_on_commit} uploaded at {date}\n"
 
     # 깃허브 커밋
-    # commit_message = f"Update posts from RSS feed\n\n{commit_msg_body}"
-    # print("commit_message: ", commit_message)
-    # repo.git.add(file_path)
-    # repo.index.commit(commit_message)
-    # print(f"Committed changes for: {file_path}")
+    commit_message = f"Update posts from RSS feed\n\n{commit_msg_body}"
+    print("commit_message: ", commit_message)
+    repo.git.add(file_path)
+    repo.index.commit(commit_message)
+    print(f"Committed changes for: {file_path}")
 
     # 깃허브에 변경 사항을 푸시
-    # origin.push()
-    print("committed compeleted")
+    origin.push()
+    # print("committed compeleted")
 
 
 if __name__ == "__main__":
