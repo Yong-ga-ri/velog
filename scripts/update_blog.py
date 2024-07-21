@@ -21,6 +21,7 @@ posts_dir = os.path.join('.', 'velog-posts')
 if not os.path.exists(posts_dir):
     os.makedirs(posts_dir)
 
+
 def main():
     repo = Repo('.')  # 현재 디렉토리의 Git 저장소를 로드
     origin = repo.remote(name='origin')
@@ -49,17 +50,18 @@ def main():
         with open(file_path, 'w', encoding='utf-8') as file:
             file.write(entry.description)  # 글 내용을 파일에 작성
         # print(f"Created file: {file_path}")
-        commit_msg_body += f"- title: {entry_title_on_commit} uploaded at {date}\n"
+        commit_msg_body += f"- title: {
+            entry_title_on_commit} uploaded at {date}\n"
 
     # 깃허브 커밋
-    commit_message = f"Update posts from RSS feed\n\n{commit_msg_body}"
+    # commit_message = f"Update posts from RSS feed\n\n{commit_msg_body}"
     # print("commit_message: ", commit_message)
-    repo.git.add(file_path)
-    repo.index.commit(commit_message)
+    # repo.git.add(file_path)
+    # repo.index.commit(commit_message)
     # print(f"Committed changes for: {file_path}")
 
     # 깃허브에 변경 사항을 푸시
-    origin.push()
+    # origin.push()
     print("committed compeleted")
 
 
