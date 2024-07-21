@@ -2,17 +2,21 @@
 	"CI",
 	"CD",
 	"CSS",
+	"DATABASE",
 	"DEVOPS",
 	"HTML",
 	"JAVA",
 	"JAVASCRIPT",
 	"JDBC",
 	"JPA",
+	"LINUX",
 	"MSA",
 	"MYBATIS",
 	"REST-API",
 	"SERVLET",
 	"SPRING",
-	"SW+ENGINNERRING",
-	"VUE"
+	"SW_ENGINNERRING",
+	"TIL",
+	"VUE",
+	"WIL"
 ]

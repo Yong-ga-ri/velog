@@ -22,8 +22,9 @@ posts_dir = os.path.join('.', 'velog-posts')
 if not os.path.exists(posts_dir):
     os.makedirs(posts_dir)
 
-with open(os.path.join(posts_dir, 'metadata.json'), 'r', encoding='utf-8') as f:
-    metadata = json.load(f)
+# 무시 키워드 로드
+with open(os.path.join(posts_dir, 'ignore_keyword.json'), 'r', encoding='utf-8') as f:
+    ignore_keywords = json.load(f)
 
 
 def main():
@@ -46,25 +47,24 @@ def main():
         date = datetime(*entry.updated_parsed[:6])
         file_path = os.path.join(posts_dir, post_title)
 
-        only_title = post_title[:-3]
-        if all(basic not in only_title for basic in metadata):
+        if all(basic not in post_title for basic in ignore_keywords):
             print("post_title: ", post_title[:-3])
 
-        with open(file_path, 'w', encoding='utf-8') as file:
-            file.write(entry.description)  # 글 내용을 파일에 작성
-        # print(f"Created file: {file_path}")
-        commit_msg_body += f"- title: {
-            entry_title_on_commit} uploaded at {date}\n"
+            with open(file_path, 'w', encoding='utf-8') as file:
+                file.write(entry.description)  # 글 내용을 파일에 작성
+            # print(f"Created file: {file_path}")
+            commit_msg_body += f"- title: {
+                entry_title_on_commit} uploaded at {date}\n"
 
     # 깃허브 커밋
     commit_message = f"Update posts from RSS feed\n\n{commit_msg_body}"
     print("commit_message: ", commit_message)
-    repo.git.add(file_path)
-    repo.index.commit(commit_message)
-    print(f"Committed changes for: {file_path}")
+    # repo.git.add(file_path)
+    # repo.index.commit(commit_message)
+    # print(f"Committed changes for: {file_path}")
 
     # 깃허브에 변경 사항을 푸시
-    origin.push()
+    # origin.push()
     # print("committed compeleted")
 
 
